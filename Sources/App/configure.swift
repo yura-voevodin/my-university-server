@@ -29,5 +29,14 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var migrations = MigrationConfig()
     migrations.add(model: Todo.self, database: .sqlite)
     services.register(migrations)
+    
+    // MARK: Command
+    
+    /// Create a `CommandConfig` with default commands.
+    var commandConfig = CommandConfig.default()
+    /// Add the `CowsayCommand`.
+    commandConfig.use(ImportGroupsSumDU(), as: "import-groups-sumdu")
+    /// Register this `CommandConfig` to services.
+    services.register(commandConfig)
 
 }
