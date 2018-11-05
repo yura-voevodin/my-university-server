@@ -17,4 +17,17 @@ public func routes(_ router: Router) throws {
     router.get("todos", use: todoController.index)
     router.post("todos", use: todoController.create)
     router.delete("todos", Todo.parameter, use: todoController.delete)
+    
+    struct PostgreSQLVersion: Codable {
+        let version: String
+    }
+    
+    router.get("sql") { req in
+        return req.withPooledConnection(to: .psql) { conn in
+            return conn.raw("SELECT version()")
+                .all(decoding: PostgreSQLVersion.self)
+            }.map { rows in
+                return rows[0].version
+        }
+    }
 }

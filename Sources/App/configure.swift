@@ -1,10 +1,10 @@
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
     /// Register providers first
-    try services.register(FluentSQLiteProvider())
+    try services.register(FluentPostgreSQLProvider())
 
     /// Register routes to the router
     let router = EngineRouter.default()
@@ -16,13 +16,13 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     /// middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
-
-    // Configure a SQLite database
-    let sqlite = try SQLiteDatabase(storage: .memory)
-
-    /// Register the configured SQLite database to the database config.
+    
+    // Configure a PostgreSQL database
+    let postgresql = try PostgreSQLDatabase(config: PostgreSQLDatabaseConfig.default())
+    
+    /// Register the configured PostgreSQL database to the database config.
     var databases = DatabasesConfig()
-    databases.add(database: sqlite, as: .sqlite)
+    databases.add(database: postgresql, as: .psql)
     services.register(databases)
 
     /// Configure migrations
