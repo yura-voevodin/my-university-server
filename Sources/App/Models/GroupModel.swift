@@ -1,14 +1,14 @@
 //
-//  AuditoriumModel.swift
+//  GroupModel.swift
 //  App
 //
-//  Created by Yura Voevodin on 11/5/18.
+//  Created by Yura Voevodin on 11/17/18.
 //
 
 import FluentPostgreSQL
 import Vapor
 
-final class AuditoriumModel: PostgreSQLModel {
+final class GroupModel: PostgreSQLModel {
     
     // MARK: Properties
     
@@ -29,7 +29,7 @@ final class AuditoriumModel: PostgreSQLModel {
 }
 
 /// Allows to be encoded to and decoded from HTTP messages.
-extension AuditoriumModel: Content { }
+extension GroupModel: Content { }
 
 /// Allows to be used as a dynamic migration.
-extension AuditoriumModel: Migration { }
+extension GroupModel: Migration { }

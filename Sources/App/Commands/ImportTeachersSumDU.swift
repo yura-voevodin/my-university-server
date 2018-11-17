@@ -1,14 +1,14 @@
 //
-//  ImportGroupsSumDU.swift
+//  ImportTeachersSumDU.swift
 //  App
 //
-//  Created by Yura Voevodin on 11/4/18.
+//  Created by Yura Voevodin on 11/17/18.
 //
 
 import FluentPostgreSQL
 import Vapor
 
-struct ImportGroupsSumDU: Command {
+struct ImportTeachersSumDU: Command {
     
     var arguments: [CommandArgument] {
         return []
@@ -19,7 +19,7 @@ struct ImportGroupsSumDU: Command {
     }
     
     var help: [String] {
-        return ["Import groups of SumDU"]
+        return ["Import teachers of SumDU"]
     }
     
     func run(using context: CommandContext) throws -> EventLoopFuture<Void> {
@@ -32,7 +32,7 @@ struct ImportGroupsSumDU: Command {
         _ = loadingBar.start(on: context.container)
         
         // Request
-        let url: String = "http://schedule.sumdu.edu.ua/index/json?method=getGroups"
+        let url: String = "http://schedule.sumdu.edu.ua/index/json?method=getTeachers"
         let request = Request(http: .init(method: .GET, url: url), using: context.container)
         
         // Response & JSON
@@ -46,9 +46,9 @@ struct ImportGroupsSumDU: Command {
                 return [:]
             }
             
-            }.map(to: [GroupModel].self) { json in
+            }.map(to: [TeacherModel].self) { json in
                 
-                var groups: [GroupModel] = []
+                var teachers: [TeacherModel] = []
                 if let dictionary = json as? [String: String] {
                     
                     for item in dictionary {
@@ -59,27 +59,27 @@ struct ImportGroupsSumDU: Command {
                         // Validation
                         guard name.count > 0 && id != 0 else { continue }
                         
-                        groups.append(GroupModel(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
+                        teachers.append(TeacherModel(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
                     }
                 }
                 
-                return groups
+                return teachers
         }
         
-        return result.flatMap { groups in
-
+        return result.flatMap { teachers in
+            
             context.container.withNewConnection(to: .psql, closure: { conn in
-
+                
                 PostgreSQLDatabase.transactionExecute({ tran in
-
-                    groups.map { group in
-
-                        group.create(on: tran)
+                    
+                    teachers.map { teacher in
+                        
+                        teacher.create(on: tran)
                             .transform(to: ())
                             .catchMap { _ in () }
-                    }
-                    .flatten(on: tran)
-
+                        }
+                        .flatten(on: tran)
+                    
                 }, on: conn)
             })
             }.map(to: Void.self) { _ in }.always {
@@ -87,3 +87,4 @@ struct ImportGroupsSumDU: Command {
         }
     }
 }
+
