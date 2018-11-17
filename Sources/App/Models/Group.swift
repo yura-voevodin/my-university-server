@@ -1,5 +1,5 @@
 //
-//  GroupModel.swift
+//  Group.swift
 //  App
 //
 //  Created by Yura Voevodin on 11/17/18.
@@ -8,7 +8,7 @@
 import FluentPostgreSQL
 import Vapor
 
-final class GroupModel: PostgreSQLModel {
+final class Group: PostgreSQLModel {
     
     // MARK: Properties
     
@@ -29,7 +29,9 @@ final class GroupModel: PostgreSQLModel {
 }
 
 /// Allows to be encoded to and decoded from HTTP messages.
-extension GroupModel: Content { }
+extension Group: Content { }
 
 /// Allows to be used as a dynamic migration.
-extension GroupModel: Migration { }
+extension Group: Migration { }
+
+extension Group: Parameter { }

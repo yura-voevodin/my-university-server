@@ -46,9 +46,9 @@ struct ImportGroupsSumDU: Command {
                 return [:]
             }
             
-            }.map(to: [GroupModel].self) { json in
+            }.map(to: [Group].self) { json in
                 
-                var groups: [GroupModel] = []
+                var groups: [Group] = []
                 if let dictionary = json as? [String: String] {
                     
                     for item in dictionary {
@@ -59,7 +59,7 @@ struct ImportGroupsSumDU: Command {
                         // Validation
                         guard name.count > 0 && id != 0 else { continue }
                         
-                        groups.append(GroupModel(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
+                        groups.append(Group(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
                     }
                 }
                 

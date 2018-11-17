@@ -1,5 +1,5 @@
 //
-//  TeacherModel.swift
+//  Teacher.swift
 //  App
 //
 //  Created by Yura Voevodin on 11/17/18.
@@ -8,7 +8,7 @@
 import FluentPostgreSQL
 import Vapor
 
-final class TeacherModel: PostgreSQLModel {
+final class Teacher: PostgreSQLModel {
     
     // MARK: Properties
     
@@ -29,8 +29,10 @@ final class TeacherModel: PostgreSQLModel {
 }
 
 /// Allows to be encoded to and decoded from HTTP messages.
-extension TeacherModel: Content { }
+extension Teacher: Content { }
 
 /// Allows to be used as a dynamic migration.
-extension TeacherModel: Migration { }
+extension Teacher: Migration { }
+
+extension Teacher: Parameter { }
 

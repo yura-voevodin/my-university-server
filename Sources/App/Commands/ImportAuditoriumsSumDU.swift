@@ -46,9 +46,9 @@ struct ImportAuditoriumsSumDU: Command {
                 return [:]
             }
             
-            }.map(to: [AuditoriumModel].self) { json in
+            }.map(to: [Auditorium].self) { json in
                 
-                var auditoriums: [AuditoriumModel] = []
+                var auditoriums: [Auditorium] = []
                 if let dictionary = json as? [String: String] {
                     
                     for item in dictionary {
@@ -59,7 +59,7 @@ struct ImportAuditoriumsSumDU: Command {
                         // Validation
                         guard name.count > 0 && id != 0 else { continue }
                         
-                        auditoriums.append(AuditoriumModel(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
+                        auditoriums.append(Auditorium(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
                     }
                 }
                 

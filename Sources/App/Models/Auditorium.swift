@@ -1,5 +1,5 @@
 //
-//  AuditoriumModel.swift
+//  Auditorium.swift
 //  App
 //
 //  Created by Yura Voevodin on 11/5/18.
@@ -8,7 +8,7 @@
 import FluentPostgreSQL
 import Vapor
 
-final class AuditoriumModel: PostgreSQLModel {
+final class Auditorium: PostgreSQLModel {
     
     // MARK: Properties
     
@@ -29,7 +29,9 @@ final class AuditoriumModel: PostgreSQLModel {
 }
 
 /// Allows to be encoded to and decoded from HTTP messages.
-extension AuditoriumModel: Content { }
+extension Auditorium: Content { }
 
 /// Allows to be used as a dynamic migration.
-extension AuditoriumModel: Migration { }
+extension Auditorium: Migration { }
+
+extension Auditorium: Parameter { }

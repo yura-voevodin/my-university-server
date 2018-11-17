@@ -46,9 +46,9 @@ struct ImportTeachersSumDU: Command {
                 return [:]
             }
             
-            }.map(to: [TeacherModel].self) { json in
+            }.map(to: [Teacher].self) { json in
                 
-                var teachers: [TeacherModel] = []
+                var teachers: [Teacher] = []
                 if let dictionary = json as? [String: String] {
                     
                     for item in dictionary {
@@ -59,7 +59,7 @@ struct ImportTeachersSumDU: Command {
                         // Validation
                         guard name.count > 0 && id != 0 else { continue }
                         
-                        teachers.append(TeacherModel(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
+                        teachers.append(Teacher(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
                     }
                 }
                 

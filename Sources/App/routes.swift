@@ -8,14 +8,11 @@ public func routes(_ router: Router) throws {
     }
     
     // Auditoriums
-    let auditoriumsController = AuditoriumsController()
-    router.get("auditoriums", use: auditoriumsController.index)
+    try router.register(collection: AuditoriumController())
     
     // Groups
-    let groupsController = GroupsController()
-    router.get("groups", use: groupsController.index)
+    try router.register(collection: GroupController())
     
     // Teachers
-    let teachersController = TeachersController()
-    router.get("teachers", use: teachersController.index)
+    try router.register(collection: TeacherController())
 }
