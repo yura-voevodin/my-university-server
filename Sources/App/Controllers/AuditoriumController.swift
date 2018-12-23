@@ -21,7 +21,17 @@ final class AuditoriumController: RouteCollection {
         return Auditorium.query(on: req).all()
     }
     
-    func show(_ request: Request)throws -> Future<Auditorium> {
-        return try request.parameters.next(Auditorium.self)
+    func show(_ request: Request) throws -> Future<Auditorium> {
+        let auditorium = Auditorium.query(on: request).first().map(to: Auditorium.self, { auditorium in
+            guard let auditorium = auditorium else {
+                throw Abort(.notFound)
+            }
+            return auditorium
+        })
+        return auditorium.map { auditorium in
+            return try auditorium.updateRecords(request: request).map(to: Auditorium.self, { auditorium in
+                return auditorium
+            })
+        }
     }
 }

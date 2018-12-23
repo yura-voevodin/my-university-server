@@ -28,6 +28,14 @@ final class Group: PostgreSQLModel {
     }
 }
 
+// MARK: - Relations
+
+extension Group {
+    var records: Children<Group, Record> {
+        return children(\.groupID)
+    }
+}
+
 /// Allows to be encoded to and decoded from HTTP messages.
 extension Group: Content { }
 

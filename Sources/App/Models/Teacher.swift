@@ -28,6 +28,14 @@ final class Teacher: PostgreSQLModel {
     }
 }
 
+// MARK: - Relations
+
+extension Teacher {
+    var records: Children<Teacher, Record> {
+        return children(\.teacherID)
+    }
+}
+
 /// Allows to be encoded to and decoded from HTTP messages.
 extension Teacher: Content { }
 

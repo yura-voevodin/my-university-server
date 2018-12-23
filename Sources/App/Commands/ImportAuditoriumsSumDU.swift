@@ -8,6 +8,7 @@
 import FluentPostgreSQL
 import Vapor
 
+/// swift run Run import-auditoriums-sumdu
 struct ImportAuditoriumsSumDU: Command {
     
     var arguments: [CommandArgument] {
@@ -59,7 +60,7 @@ struct ImportAuditoriumsSumDU: Command {
                         // Validation
                         guard name.count > 0 && id != 0 else { continue }
                         
-                        auditoriums.append(Auditorium(serverID: id, name: name, updatedAt: "", lowercaseName: name.lowercased()))
+                        auditoriums.append(Auditorium(serverID: id, name: name, updatedAt: nil, lowercaseName: name.lowercased()))
                     }
                 }
                 

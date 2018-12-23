@@ -8,6 +8,7 @@
 import FluentPostgreSQL
 import Vapor
 
+/// swift run Run import-teachers-sumdu
 struct ImportTeachersSumDU: Command {
     
     var arguments: [CommandArgument] {
